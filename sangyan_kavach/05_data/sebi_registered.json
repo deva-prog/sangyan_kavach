@@ -1,0 +1,11 @@
+{"note":"SAMPLE data for demo. In production, sync from SEBI's official intermediary portal.",
+"entities":[
+{"name":"Zerodha Broking Ltd","type":"Stock Broker","reg_no":"INZ000031633"},
+{"name":"Groww Invest Tech Pvt Ltd","type":"Stock Broker","reg_no":"INZ000301838"},
+{"name":"Upstox (RKSV Securities)","type":"Stock Broker","reg_no":"INZ000185632"},
+{"name":"Angel One Ltd","type":"Stock Broker","reg_no":"INZ000161534"},
+{"name":"HDFC Securities Ltd","type":"Stock Broker","reg_no":"INZ000186937"},
+{"name":"ICICI Securities Ltd","type":"Stock Broker","reg_no":"INZ000183631"},
+{"name":"Motilal Oswal Financial Services","type":"Research Analyst","reg_no":"INH000000412"},
+{"name":"Sample Research Analyst","type":"Research Analyst","reg_no":"INH000000000"}
+]}

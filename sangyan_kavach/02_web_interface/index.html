@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sangyan Kavach</title>
+<style>
+:root{--paper:#f7f3ea;--ink:#1c2b24;--green:#1f5d46;--line:#d9d2c0;--red:#b3261e;--amber:#b7791f;--ok:#2f7d4f;--mut:#6b7468}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Segoe UI","Noto Sans Devanagari",Roboto,sans-serif}
+.top{border-bottom:2px solid var(--ink);padding:14px 20px;display:flex;justify-content:space-between;align-items:baseline}
+.top h1{font:700 24px Georgia,serif;margin:0;letter-spacing:.3px}
+.top small{color:var(--mut);margin-left:10px}
+#lang{background:none;border:1px solid var(--ink);padding:5px 10px;cursor:pointer;font:inherit}
+nav{display:flex;border-bottom:1px solid var(--line);padding:0 20px}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:12px 16px;font:inherit;cursor:pointer;color:var(--mut)}
+nav button.on{border-color:var(--green);color:var(--ink);font-weight:600}
+main{max-width:820px;margin:0 auto;padding:22px 20px 60px}
+label{font-weight:600;display:block;margin:14px 0 4px}
+textarea,input{width:100%;padding:10px;border:1px solid var(--ink);background:#fffdf8;font:inherit;border-radius:2px}
+textarea{min-height:140px}
+.btn{background:var(--green);color:#fff;border:0;padding:10px 20px;font:inherit;cursor:pointer;margin:12px 10px 0 0;border-radius:2px}
+.btn.ghost{background:none;color:var(--green);border:1px solid var(--green)}
+.verdict{border-left:8px solid;padding:12px 16px;margin:20px 0 10px;background:#fffdf8}
+.verdict.HIGH{border-color:var(--red)}.verdict.MEDIUM{border-color:var(--amber)}.verdict.LOW{border-color:var(--ok)}
+.verdict h2{margin:0;font:700 22px Georgia,serif}.verdict .n{float:right;font:700 34px Georgia,serif}
+.meter{height:6px;background:var(--line);margin:8px 0}.meter i{display:block;height:100%}
+h3{font:700 16px Georgia,serif;margin:20px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+mark{background:#f6d77a;padding:0 2px}.quote{background:#fffdf8;border:1px dashed var(--line);padding:10px;font-size:14px}
+.row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0}
+.tag{font-size:12px;border:1px solid var(--green);color:var(--green);padding:1px 7px}
+.hide{display:none}.mut{color:var(--mut);font-size:14px}
+#cap{position:fixed;left:0;right:0;bottom:0;background:#1c2b24;color:#fff;text-align:center;padding:14px;font-size:20px;display:none}
+</style></head><body>
+<div id="warn" style="display:none;background:#b3261e;color:#fff;padding:10px 20px">This page must be opened through the server. Run <b>python server.py</b> (or run.bat) and open the address it prints. Opening the file directly will not work.</div>
+<div class="top"><div><h1>Sangyan Kavach<small id="tag"></small></h1></div><select id="lang" onchange="setLang(this.value)" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option></select></div>
+<nav><button id="b1" class="on" onclick="go(1)"></button><button id="b2" onclick="go(2)"></button><button id="b3" onclick="go(3)"></button></nav>
+<main>
+ <section id="s1">
+  <label id="l_msg"></label><textarea id="msg"></textarea>
+  <button class="btn ghost" id="mic" onclick="listen()"></button><label class="btn ghost" style="display:inline-block;cursor:pointer"><span id="shot"></span><input type="file" accept="image/*" hidden onchange="ocr(this.files[0])"></label><span id="ocrmsg" class="mut"></span>
+  <label id="l_name"></label><input id="who">
+  <button class="btn" id="run" onclick="check()"></button><button class="btn ghost" id="demo" onclick="fill()"></button>
+  <div id="res"></div>
+ </section>
+ <section id="s2" class="hide">
+  <label id="l_q"></label><input id="q" oninput="lookup()"><div id="found"></div>
+ </section>
+ <section id="s3" class="hide"><div id="drill"></div></section>
+ <p class="mut" id="note"></p>
+</main>
+<div id="cap"></div>
+<script>
+const L={en:{tag:"scam check for first-time investors",b1:"Check a message",b2:"SEBI registry",b3:"Scam drill",
+ shot:"Upload screenshot",ocr:"Reading image (runs in your browser)...",ocrfail:"Could not read the image. Check your internet connection or type the text.",mic:"Speak",stop:"Listening...",read:"Read aloud",conf:"Confidence",nomic:"Voice input is not supported in this browser (use Chrome).",CL:{Higher:"Higher",Medium:"Medium",Low:"Low"},msg:"Message or tip you received",name:"Advisor / company name (optional)",run:"Check",demo:"Fill example",
+ q:"Search by name or registration number",why:"What looks wrong",reg:"Registration",steps:"What to do now",none:"No known warning signs in this text.",
+ note:"Decision-support only, not financial or legal advice. Confirm on sebi.gov.in. Registry data in this demo is a small sample.",
+ risk:{HIGH:"High risk",MEDIUM:"Medium risk",LOW:"Low risk"},scam:"Scam",legit:"Genuine",score:"Your score",again:"Play again",ok:"Correct.",no:"Not quite.",nf:"No match in the sample registry.",
+ st:{verified:"Verified in registry",number_not_found:"Number not in registry - likely fake",name_match_verify_number:"Name found - verify the number",name_not_found:"Name not in registry",not_provided:"No registration number given"}},
+hi:{tag:"नए निवेशकों के लिए स्कैम जाँच",b1:"संदेश जाँचें",b2:"SEBI रजिस्ट्री",b3:"स्कैम अभ्यास",
+ shot:"स्क्रीनशॉट अपलोड करें",ocr:"इमेज पढ़ रहा है (आपके ब्राउज़र में)...",ocrfail:"इमेज नहीं पढ़ सका। इंटरनेट जाँचें या टेक्स्ट टाइप करें।",mic:"बोलें",stop:"सुन रहा है...",read:"सुनें",conf:"भरोसा",nomic:"इस ब्राउज़र में वॉइस इनपुट नहीं है (Chrome उपयोग करें)।",CL:{Higher:"अधिक",Medium:"मध्यम",Low:"कम"},msg:"आपको मिला संदेश या टिप",name:"सलाहकार / कंपनी का नाम (वैकल्पिक)",run:"जाँचें",demo:"उदाहरण भरें",
+ q:"नाम या पंजीकरण नंबर से खोजें",why:"क्या संदिग्ध है",reg:"पंजीकरण",steps:"अब क्या करें",none:"इस टेक्स्ट में कोई जाना-पहचाना चेतावनी संकेत नहीं।",
+ note:"यह केवल सहायक जानकारी है, वित्तीय/कानूनी सलाह नहीं। sebi.gov.in पर पुष्टि करें। डेमो की रजिस्ट्री एक छोटा नमूना है।",
+ risk:{HIGH:"ज़्यादा जोखिम",MEDIUM:"मध्यम जोखिम",LOW:"कम जोखिम"},scam:"स्कैम",legit:"असली",score:"आपका स्कोर",again:"फिर खेलें",ok:"सही।",no:"ग़लत।",nf:"नमूना रजिस्ट्री में कोई मिलान नहीं।",
+ st:{verified:"रजिस्ट्री में सत्यापित",number_not_found:"नंबर रजिस्ट्री में नहीं - संभवतः नकली",name_match_verify_number:"नाम मिला - नंबर जाँचें",name_not_found:"नाम रजिस्ट्री में नहीं",not_provided:"पंजीकरण नंबर नहीं दिया"}},
+mr:{tag:"नवीन गुंतवणूकदारांसाठी फसवणूक तपासणी",b1:"संदेश तपासा",b2:"SEBI नोंदणी",b3:"फसवणूक सराव",shot:"स्क्रीनशॉट अपलोड करा",ocr:"प्रतिमा वाचत आहे (तुमच्या ब्राउझरमध्ये)...",ocrfail:"प्रतिमा वाचता आली नाही. इंटरनेट तपासा किंवा मजकूर टाइप करा.",mic:"बोला",stop:"ऐकत आहे...",read:"ऐका",conf:"खात्री",nomic:"या ब्राउझरमध्ये व्हॉइस इनपुट उपलब्ध नाही (Chrome वापरा).",CL:{Higher:"अधिक",Medium:"मध्यम",Low:"कमी"},msg:"तुम्हाला आलेला संदेश किंवा टिप",name:"सल्लागार / कंपनीचे नाव (ऐच्छिक)",run:"तपासा",demo:"उदाहरण भरा",q:"नाव किंवा नोंदणी क्रमांकाने शोधा",why:"काय संशयास्पद आहे",reg:"नोंदणी",steps:"आता काय करावे",none:"या मजकुरात कोणतीही ज्ञात धोक्याची खूण नाही.",note:"ही केवळ निर्णय-सहाय्यक माहिती आहे, आर्थिक/कायदेशीर सल्ला नाही. sebi.gov.in वर खात्री करा. डेमोमधील नोंदणी यादी लहान नमुना आहे.",risk:{HIGH:"जास्त धोका",MEDIUM:"मध्यम धोका",LOW:"कमी धोका"},scam:"फसवणूक",legit:"खरा",score:"तुमचे गुण",again:"पुन्हा खेळा",ok:"बरोबर.",no:"चूक.",nf:"नमुना यादीत जुळणी नाही.",st:{verified:"नोंदणी यादीत पडताळले",number_not_found:"क्रमांक यादीत नाही - बहुधा बनावट",name_match_verify_number:"नाव सापडले - क्रमांक तपासा",name_not_found:"नाव यादीत नाही",not_provided:"नोंदणी क्रमांक दिलेला नाही"}},
+ta:{tag:"புதிய முதலீட்டாளர்களுக்கான மோசடி சோதனை",b1:"செய்தியை சோதி",b2:"SEBI பதிவு",b3:"மோசடி பயிற்சி",shot:"ஸ்கிரீன்ஷாட் பதிவேற்று",ocr:"படத்தை படிக்கிறது (உங்கள் உலாவியில்)...",ocrfail:"படத்தைப் படிக்க முடியவில்லை. இணையத்தை சரிபார்க்கவும் அல்லது உரையை தட்டச்சு செய்யவும்.",mic:"பேசுங்கள்",stop:"கேட்கிறது...",read:"கேளுங்கள்",conf:"நம்பகத்தன்மை",nomic:"இந்த உலாவியில் குரல் உள்ளீடு இல்லை (Chrome பயன்படுத்தவும்).",CL:{Higher:"அதிகம்",Medium:"நடுத்தரம்",Low:"குறைவு"},msg:"உங்களுக்கு வந்த செய்தி அல்லது டிப்",name:"ஆலோசகர் / நிறுவன பெயர் (விருப்பம்)",run:"சோதி",demo:"உதாரணம் நிரப்பு",q:"பெயர் அல்லது பதிவு எண் மூலம் தேடுங்கள்",why:"என்ன சந்தேகமாக உள்ளது",reg:"பதிவு",steps:"இப்போது என்ன செய்வது",none:"இந்த உரையில் அறியப்பட்ட எச்சரிக்கை அறிகுறிகள் இல்லை.",note:"இது முடிவெடுக்க உதவும் தகவல் மட்டுமே; நிதி/சட்ட ஆலோசனை அல்ல. sebi.gov.in-இல் உறுதிசெய்யவும். டெமோவில் உள்ள பதிவு பட்டியல் சிறிய மாதிரி.",risk:{HIGH:"அதிக ஆபத்து",MEDIUM:"நடுத்தர ஆபத்து",LOW:"குறைந்த ஆபத்து"},scam:"மோசடி",legit:"உண்மையானது",score:"உங்கள் மதிப்பெண்",again:"மீண்டும் விளையாடு",ok:"சரி.",no:"தவறு.",nf:"மாதிரி பட்டியலில் பொருத்தம் இல்லை.",st:{verified:"பதிவு பட்டியலில் சரிபார்க்கப்பட்டது",number_not_found:"எண் பட்டியலில் இல்லை - போலியாக இருக்கலாம்",name_match_verify_number:"பெயர் உள்ளது - எண்ணை சரிபார்க்கவும்",name_not_found:"பெயர் பட்டியலில் இல்லை",not_provided:"பதிவு எண் கொடுக்கப்படவில்லை"}}};
+let lastSpeech="";let lang="en",drills=[],i=0,pts=0;
+const $=id=>document.getElementById(id),T=()=>L[lang];
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function paint(){const t=T();$("tag").textContent=t.tag;$("b1").textContent=t.b1;$("b2").textContent=t.b2;$("b3").textContent=t.b3;
+ $("l_msg").textContent=t.msg;$("l_name").textContent=t.name;$("run").textContent=t.run;$("mic").textContent=t.mic;$("demo").textContent=t.demo;$("l_q").textContent=t.q;$("note").textContent=t.note;
+ $("shot").textContent=t.shot;document.documentElement.lang=lang}
+function setLang(v){lang=v;paint();if(!$("s3").classList.contains("hide"))drillView();if($("res").innerHTML)check()}
+function go(n){[1,2,3].forEach(k=>{$("s"+k).classList.toggle("hide",k!=n);$("b"+k).classList.toggle("on",k==n)});if(n==3)loadDrill()}
+const SL={en:"en-IN",hi:"hi-IN",mr:"mr-IN",ta:"ta-IN"},OL={en:"eng",hi:"hin+eng",mr:"mar+eng",ta:"tam+eng"};
+async function ocr(file){ // screenshot text is read inside the browser; the image is never uploaded to our server
+ if(!file)return;$("ocrmsg").textContent=T().ocr;
+ try{if(!window.Tesseract){await new Promise((ok,bad)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";s.onload=ok;s.onerror=bad;document.head.appendChild(s)})}
+  const r=await Tesseract.recognize(file,OL[lang]);$("msg").value=r.data.text.trim();$("ocrmsg").textContent=""}
+ catch(e){$("ocrmsg").textContent=T().ocrfail}}
+function speak(){if(!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(lastSpeech);u.lang=SL[lang];u.rate=.9;speechSynthesis.speak(u)}
+function listen(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert(T().nomic);return}
+ const r=new SR();r.lang=SL[lang];$("mic").textContent=T().stop;
+ r.onresult=e=>{$("msg").value+=(($("msg").value?" ":"")+e.results[0][0].transcript)};r.onend=()=>{$("mic").textContent=T().mic};r.onerror=()=>{$("mic").textContent=T().mic};r.start()}
+function fill(){$("msg").value="Join our VIP Telegram group. SEBI approved insider tips, guaranteed 5x returns in 7 days. Only 10 seats left, pay Rs 2000 registration fee on UPI: tips@upi";$("who").value="Rahul Capital Advisors"}
+async function check(){
+ const r=await(await fetch("/api/analyse",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:$("msg").value,name:$("who").value,lang})})).json();
+ const t=T(),colr={HIGH:"var(--red)",MEDIUM:"var(--amber)",LOW:"var(--ok)"}[r.level];
+ let shown=esc($("msg").value);r.evidence.forEach(e=>shown=shown.split(esc(e)).join("<mark>"+esc(e)+"</mark>"));
+ const m=r.registry.matched_entity;lastSpeech=t.risk[r.level]+". "+r.summary+". "+r.reasons.join(". ")+". "+r.next_steps.join(". ");
+ $("res").innerHTML=`<div class="verdict ${r.level}"><span class="n" style="color:${colr}">${r.score}</span><h2>${t.risk[r.level]}</h2><div class="meter"><i style="width:${r.score}%;background:${colr}"></i></div><div>${r.summary}</div></div>
+ <div class="quote">${shown}</div>
+ <h3>${t.why}</h3><ul>${r.reasons.length?r.reasons.map(x=>`<li>${x}</li>`).join(""):`<li>${t.none}</li>`}</ul>
+ <h3>${t.reg}</h3><div>${t.st[r.registry.status]}${m?` - ${m.name} (${m.reg_no})`:""}</div>
+ <p class="mut"><b>${t.conf}: ${t.CL[r.confidence]}.</b> ${r.uncertainty}</p>
+ <button class="btn ghost" onclick="speak()">${t.read}</button>
+ <h3>${t.steps}</h3><ol>${r.next_steps.map(x=>`<li>${x}</li>`).join("")}</ol>`}
+async function lookup(){const q=$("q").value;if(q.length<2){$("found").innerHTML="";return}
+ const r=await(await fetch("/api/registry?q="+encodeURIComponent(q))).json();
+ $("found").innerHTML=r.length?r.map(e=>`<div class="row"><span>${e.name} <span class="tag">${e.type}</span></span><b>${e.reg_no}</b></div>`).join(""):`<p class="mut">${T().nf}</p>`}
+async function loadDrill(){drills=await(await fetch("/api/drills")).json();i=0;pts=0;drillView()}
+function drillView(){const t=T();if(i>=drills.length){$("drill").innerHTML=`<h3>${t.score}: ${pts} / ${drills.length}</h3><button class="btn" onclick="loadDrill()">${t.again}</button>`;return}
+ $("drill").innerHTML=`<p class="mut">${i+1} / ${drills.length}</p><div class="quote" style="font-size:17px">${esc(drills[i].msg)}</div>
+ <button class="btn" onclick="pick(true)">${t.scam}</button><button class="btn ghost" onclick="pick(false)">${t.legit}</button><div id="fb"></div>`}
+function pick(g){const d=drills[i],ok=g===d.is_scam;if(ok)pts++;
+ $("fb").innerHTML=`<h3>${ok?T().ok:T().no}</h3><p>${esc(d.why)}</p><button class="btn" onclick="i++;drillView()">&rarr;</button>`}
+if(location.protocol==='file:')document.getElementById('warn').style.display='block';
+paint();
+</script></body></html>

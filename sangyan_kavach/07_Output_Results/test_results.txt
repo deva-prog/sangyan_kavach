@@ -1,0 +1,8 @@
+$ python tests/test_engine.py
+PASS test_scam_high
+PASS test_legit_low
+PASS test_fake_reg_number
+PASS test_hindi
+PASS test_marathi_tamil
+
+exit code: 0

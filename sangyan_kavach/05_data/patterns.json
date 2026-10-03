@@ -1,0 +1,148 @@
+{
+ "rules": [
+  {
+   "id": "guaranteed_returns",
+   "weight": 30,
+   "label_en": "Promises guaranteed / assured returns",
+   "label_hi": "गारंटीड / पक्के रिटर्न का वादा",
+   "regex": [
+    "guarantee[d]?\\s+(return|profit)",
+    "guaranteed",
+    "assured\\s+(return|profit)",
+    "100\\s*%\\s*(profit|return|safe)",
+    "risk[\\s-]*free",
+    "no\\s+loss",
+    "sure[\\s-]*shot",
+    "पक्का\\s*(मुनाफा|रिटर्न)",
+    "गारंटी",
+    "हमी\\s*(दिलेला\\s*)?परतावा",
+    "निश्चित\\s*नफा",
+    "गॅरंटी",
+    "உத்தரவாத",
+    "உறுதியான\\s*லாபம்"
+   ],
+   "label_mr": "हमी दिलेल्या / निश्चित परताव्याचे आश्वासन",
+   "label_ta": "உத்தரவாத / நிச்சய வருமானத்தை வாக்குறுதி அளிக்கிறது"
+  },
+  {
+   "id": "unrealistic_returns",
+   "weight": 25,
+   "label_en": "Unrealistic return numbers (double/triple money, daily %)",
+   "label_hi": "अवास्तविक रिटर्न (पैसा दोगुना, रोज़ का %)",
+   "regex": [
+    "double\\s+(your\\s+)?money",
+    "(2|3|5|10)\\s*x\\s+(return|in)",
+    "\\d{2,3}\\s*%\\s*(per|a|every)\\s*(day|week|month)",
+    "daily\\s+profit",
+    "पैसा\\s*दोगुना",
+    "रोज़?\\s*कमाई",
+    "पैसे\\s*दुप्पट",
+    "பணம்\\s*இரட்டிப்பு"
+   ],
+   "label_mr": "अवास्तव परतावा (पैसे दुप्पट, रोजचा %)",
+   "label_ta": "நம்பமுடியாத வருமானம் (பணம் இரட்டிப்பு, தினசரி %)"
+  },
+  {
+   "id": "urgency",
+   "weight": 15,
+   "label_en": "Creates false urgency / pressure",
+   "label_hi": "झूठी जल्दबाज़ी का दबाव",
+   "regex": [
+    "limited\\s+(seats|slots|time|period)",
+    "last\\s+chance",
+    "act\\s+now",
+    "hurry",
+    "only\\s+\\d+\\s+(seats|slots)",
+    "today\\s+only",
+    "जल्दी\\s*करें",
+    "आखिरी\\s*मौका",
+    "घाई\\s*करा",
+    "विलंब\\s*करू\\s*नका",
+    "உடனே",
+    "விரைவாக"
+   ],
+   "label_mr": "खोटी घाई / दबाव निर्माण करते",
+   "label_ta": "பொய்யான அவசரம் / அழுத்தம் உருவாக்குகிறது"
+  },
+  {
+   "id": "insider_tip",
+   "weight": 25,
+   "label_en": "Claims insider / operator tips",
+   "label_hi": "इनसाइडर / ऑपरेटर टिप का दावा",
+   "regex": [
+    "insider",
+    "operator\\s+(tip|call)",
+    "jackpot\\s+(call|stock)",
+    "upper\\s+circuit\\s+(tip|guarantee)",
+    "ऑपरेटर",
+    "इनसाइडर",
+    "இன்சைடர்",
+    "इनसायडर"
+   ],
+   "label_mr": "इनसायडर / ऑपरेटर टिपचा दावा",
+   "label_ta": "உள்ளுறை (இன்சைடர்) / ஆபரேட்டர் குறிப்பு என்று கூறுகிறது"
+  },
+  {
+   "id": "group_funnel",
+   "weight": 15,
+   "label_en": "Pushes you into WhatsApp/Telegram VIP groups",
+   "label_hi": "WhatsApp/Telegram VIP ग्रुप में बुलाता है",
+   "regex": [
+    "vip\\s+(group|channel)",
+    "join\\s+(our\\s+)?(whatsapp|telegram)",
+    "t\\.me/",
+    "chat\\.whatsapp\\.com",
+    "premium\\s+group",
+    "फ्री\\s*(ग्रुप|टिप्स)"
+   ],
+   "label_mr": "WhatsApp/Telegram VIP ग्रुपमध्ये ओढते",
+   "label_ta": "WhatsApp/Telegram VIP குழுவில் சேர வற்புறுத்துகிறது"
+  },
+  {
+   "id": "fake_app",
+   "weight": 25,
+   "label_en": "Asks you to install an unofficial trading app / APK",
+   "label_hi": "अनधिकृत ट्रेडिंग ऐप / APK इंस्टॉल करने को कहता है",
+   "regex": [
+    "\\.apk",
+    "download\\s+(our|this)\\s+app",
+    "institutional\\s+(account|trading)",
+    "ipo\\s+allot(ment)?\\s+guarantee",
+    "block\\s+trade\\s+(access|account)"
+   ],
+   "label_mr": "अनधिकृत ट्रेडिंग ॲप / APK इन्स्टॉल करायला सांगते",
+   "label_ta": "அதிகாரப்பூர்வமற்ற டிரேடிங் ஆப் / APK நிறுவ சொல்கிறது"
+  },
+  {
+   "id": "money_first",
+   "weight": 25,
+   "label_en": "Asks for money / advance fee / UPI to a personal account",
+   "label_hi": "अग्रिम पैसा / निजी UPI खाते में भुगतान माँगता है",
+   "regex": [
+    "registration\\s+fee",
+    "pay\\s+(first|advance)",
+    "send\\s+(money|payment)",
+    "upi\\s*(id)?\\s*[:\\-]",
+    "deposit\\s+(rs|₹|inr)",
+    "जमा\\s*करें",
+    "पेमेंट\\s*भेजें",
+    "नोंदणी\\s*शुल्क",
+    "பதிவு\\s*கட்டணம்"
+   ],
+   "label_mr": "आगाऊ पैसे / वैयक्तिक UPI वर पेमेंट मागते",
+   "label_ta": "முன்பணம் / தனிநபர் UPI-க்கு பணம் கேட்கிறது"
+  },
+  {
+   "id": "sebi_claim",
+   "weight": 10,
+   "label_en": "Claims to be 'SEBI approved' without proof",
+   "label_hi": "बिना प्रमाण 'SEBI approved' का दावा",
+   "regex": [
+    "sebi\\s+(approved|certified|authori[sz]ed)",
+    "sebi\\s+से\\s+मान्यता"
+   ],
+   "label_mr": "पुराव्याशिवाय 'SEBI मान्य' असल्याचा दावा",
+   "label_ta": "ஆதாரமின்றி 'SEBI அங்கீகாரம்' என்று கூறுகிறது"
+  }
+ ]
+}

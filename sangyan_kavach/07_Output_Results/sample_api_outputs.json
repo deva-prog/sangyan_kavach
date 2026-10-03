@@ -1,0 +1,260 @@
+[
+  {
+    "case": "Scam: guaranteed returns + VIP group + fee",
+    "language": "en",
+    "input": {
+      "text": "Join our VIP Telegram group. SEBI approved insider tips, guaranteed 5x returns in 7 days. Only 10 seats left, pay Rs 2000 registration fee on UPI: tips@upi",
+      "advisor_name": "Rahul Capital Advisors"
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "This is a heuristic estimate from known warning patterns, not proof. New scams may use wording we do not know. Always verify on sebi.gov.in.",
+      "score": 100,
+      "level": "HIGH",
+      "reasons": [
+        "Promises guaranteed / assured returns",
+        "Unrealistic return numbers (double/triple money, daily %)",
+        "Creates false urgency / pressure",
+        "Claims insider / operator tips",
+        "Asks for money / advance fee / UPI to a personal account",
+        "Claims to be 'SEBI approved' without proof"
+      ],
+      "evidence": [
+        "guaranteed",
+        "5x return",
+        "Only 10 seats",
+        "insider",
+        "registration fee",
+        "SEBI approved"
+      ],
+      "registry": {
+        "reg_numbers": [],
+        "matched_entity": null,
+        "status": "name_not_found"
+      },
+      "next_steps": [
+        "Do not pay or share OTP, PAN, Aadhaar or bank details.",
+        "Verify the advisor on SEBI's official 'Intermediaries' search (sebi.gov.in).",
+        "Report fraud: call 1930 or file at cybercrime.gov.in.",
+        "Complain against a SEBI-registered entity: SEBI SCORES (scores.sebi.gov.in).",
+        "Stop and tell a family member before acting on any 'tip'."
+      ],
+      "summary": "High risk - this looks like a likely scam.",
+      "disclaimer": "Decision-support only, not legal/financial advice."
+    }
+  },
+  {
+    "case": "Scam: fake registration number",
+    "language": "en",
+    "input": {
+      "text": "SEBI approved advisor INH999999999. Sure-shot profit, act now",
+      "advisor_name": ""
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "This is a heuristic estimate from known warning patterns, not proof. New scams may use wording we do not know. Always verify on sebi.gov.in.",
+      "score": 80,
+      "level": "HIGH",
+      "reasons": [
+        "Promises guaranteed / assured returns",
+        "Creates false urgency / pressure",
+        "Claims to be 'SEBI approved' without proof"
+      ],
+      "evidence": [
+        "Sure-shot",
+        "act now",
+        "SEBI approved"
+      ],
+      "registry": {
+        "reg_numbers": [
+          "INH999999999"
+        ],
+        "matched_entity": null,
+        "status": "number_not_found"
+      },
+      "next_steps": [
+        "Do not pay or share OTP, PAN, Aadhaar or bank details.",
+        "Verify the advisor on SEBI's official 'Intermediaries' search (sebi.gov.in).",
+        "Report fraud: call 1930 or file at cybercrime.gov.in.",
+        "Complain against a SEBI-registered entity: SEBI SCORES (scores.sebi.gov.in).",
+        "Stop and tell a family member before acting on any 'tip'."
+      ],
+      "summary": "High risk - this looks like a likely scam.",
+      "disclaimer": "Decision-support only, not legal/financial advice."
+    }
+  },
+  {
+    "case": "Genuine: valid registration number",
+    "language": "en",
+    "input": {
+      "text": "SEBI-registered RA INH000000412. Research is educational. Returns are subject to market risk.",
+      "advisor_name": "Motilal Oswal Financial Services"
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "This is a heuristic estimate from known warning patterns, not proof. New scams may use wording we do not know. Always verify on sebi.gov.in.",
+      "score": 0,
+      "level": "LOW",
+      "reasons": [],
+      "evidence": [],
+      "registry": {
+        "reg_numbers": [
+          "INH000000412"
+        ],
+        "matched_entity": {
+          "name": "Motilal Oswal Financial Services",
+          "type": "Research Analyst",
+          "reg_no": "INH000000412"
+        },
+        "status": "verified"
+      },
+      "next_steps": [
+        "Do not pay or share OTP, PAN, Aadhaar or bank details.",
+        "Verify the advisor on SEBI's official 'Intermediaries' search (sebi.gov.in)."
+      ],
+      "summary": "Low risk - still verify registration yourself.",
+      "disclaimer": "Decision-support only, not legal/financial advice."
+    }
+  },
+  {
+    "case": "Neutral message, nothing to flag",
+    "language": "en",
+    "input": {
+      "text": "Hello, are we meeting for lunch tomorrow?",
+      "advisor_name": ""
+    },
+    "output": {
+      "confidence": "Low",
+      "uncertainty": "This is a heuristic estimate from known warning patterns, not proof. New scams may use wording we do not know. Always verify on sebi.gov.in.",
+      "score": 0,
+      "level": "LOW",
+      "reasons": [],
+      "evidence": [],
+      "registry": {
+        "reg_numbers": [],
+        "matched_entity": null,
+        "status": "not_provided"
+      },
+      "next_steps": [
+        "Do not pay or share OTP, PAN, Aadhaar or bank details.",
+        "Verify the advisor on SEBI's official 'Intermediaries' search (sebi.gov.in)."
+      ],
+      "summary": "Low risk - still verify registration yourself.",
+      "disclaimer": "Decision-support only, not legal/financial advice."
+    }
+  },
+  {
+    "case": "Scam in Hindi",
+    "language": "hi",
+    "input": {
+      "text": "पक्का मुनाफा! जल्दी करें, पेमेंट भेजें",
+      "advisor_name": ""
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "यह जाने-पहचाने चेतावनी पैटर्न पर आधारित अनुमान है, सबूत नहीं। नए स्कैम की भाषा अलग हो सकती है। हमेशा sebi.gov.in पर जाँचें।",
+      "score": 70,
+      "level": "HIGH",
+      "reasons": [
+        "गारंटीड / पक्के रिटर्न का वादा",
+        "झूठी जल्दबाज़ी का दबाव",
+        "अग्रिम पैसा / निजी UPI खाते में भुगतान माँगता है"
+      ],
+      "evidence": [
+        "पक्का मुनाफा",
+        "जल्दी करें",
+        "पेमेंट भेजें"
+      ],
+      "registry": {
+        "reg_numbers": [],
+        "matched_entity": null,
+        "status": "not_provided"
+      },
+      "next_steps": [
+        "पैसे न भेजें और OTP, PAN, आधार या बैंक विवरण साझा न करें।",
+        "SEBI की आधिकारिक वेबसाइट (sebi.gov.in) पर सलाहकार का रजिस्ट्रेशन जाँचें।",
+        "धोखाधड़ी की रिपोर्ट करें: 1930 पर कॉल करें या cybercrime.gov.in पर शिकायत करें।",
+        "SEBI-पंजीकृत संस्था की शिकायत: SEBI SCORES (scores.sebi.gov.in)।",
+        "किसी भी 'टिप' पर काम करने से पहले परिवार के किसी सदस्य को बताएँ।"
+      ],
+      "summary": "बहुत ज़्यादा जोखिम - यह संभवतः धोखाधड़ी है।",
+      "disclaimer": "यह केवल सहायक जानकारी है, कानूनी/वित्तीय सलाह नहीं।"
+    }
+  },
+  {
+    "case": "Scam in Marathi",
+    "language": "mr",
+    "input": {
+      "text": "हमी परतावा! घाई करा, नोंदणी शुल्क भरा",
+      "advisor_name": ""
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "हा ज्ञात धोक्याच्या खुणांवर आधारित अंदाज आहे, पुरावा नाही. नवीन फसवणुकीचे शब्द वेगळे असू शकतात. नेहमी sebi.gov.in वर तपासा.",
+      "score": 70,
+      "level": "HIGH",
+      "reasons": [
+        "हमी दिलेल्या / निश्चित परताव्याचे आश्वासन",
+        "खोटी घाई / दबाव निर्माण करते",
+        "आगाऊ पैसे / वैयक्तिक UPI वर पेमेंट मागते"
+      ],
+      "evidence": [
+        "हमी परतावा",
+        "घाई करा",
+        "नोंदणी शुल्क"
+      ],
+      "registry": {
+        "reg_numbers": [],
+        "matched_entity": null,
+        "status": "not_provided"
+      },
+      "next_steps": [
+        "पैसे पाठवू नका आणि OTP, PAN, आधार किंवा बँक तपशील देऊ नका.",
+        "SEBI च्या अधिकृत वेबसाइटवर (sebi.gov.in) सल्लागाराची नोंदणी तपासा.",
+        "फसवणुकीची तक्रार करा: 1930 वर कॉल करा किंवा cybercrime.gov.in वर तक्रार नोंदवा.",
+        "SEBI-नोंदणीकृत संस्थेची तक्रार: SEBI SCORES (scores.sebi.gov.in).",
+        "कोणत्याही 'टिप'वर कृती करण्यापूर्वी कुटुंबातील कोणाला तरी सांगा."
+      ],
+      "summary": "खूप जास्त धोका - ही बहुधा फसवणूक आहे.",
+      "disclaimer": "ही केवळ निर्णय-सहाय्यक माहिती आहे, आर्थिक/कायदेशीर सल्ला नाही."
+    }
+  },
+  {
+    "case": "Scam in Tamil",
+    "language": "ta",
+    "input": {
+      "text": "உத்தரவாத லாபம்! உடனே பதிவு கட்டணம் செலுத்துங்கள்",
+      "advisor_name": ""
+    },
+    "output": {
+      "confidence": "Higher",
+      "uncertainty": "இது அறியப்பட்ட எச்சரிக்கை வடிவங்களின் அடிப்படையிலான மதிப்பீடு, ஆதாரம் அல்ல. புதிய மோசடிகள் வேறு சொற்களைப் பயன்படுத்தலாம். எப்போதும் sebi.gov.in-இல் சரிபார்க்கவும்.",
+      "score": 70,
+      "level": "HIGH",
+      "reasons": [
+        "உத்தரவாத / நிச்சய வருமானத்தை வாக்குறுதி அளிக்கிறது",
+        "பொய்யான அவசரம் / அழுத்தம் உருவாக்குகிறது",
+        "முன்பணம் / தனிநபர் UPI-க்கு பணம் கேட்கிறது"
+      ],
+      "evidence": [
+        "உத்தரவாத",
+        "உடனே",
+        "பதிவு கட்டணம்"
+      ],
+      "registry": {
+        "reg_numbers": [],
+        "matched_entity": null,
+        "status": "not_provided"
+      },
+      "next_steps": [
+        "பணம் அனுப்ப வேண்டாம்; OTP, PAN, ஆதார் அல்லது வங்கி விவரங்களை பகிர வேண்டாம்.",
+        "SEBI அதிகாரப்பூர்வ இணையதளத்தில் (sebi.gov.in) ஆலோசகரின் பதிவை சரிபார்க்கவும்.",
+        "மோசடியை புகாரளிக்க: 1930-ஐ அழைக்கவும் அல்லது cybercrime.gov.in-இல் புகார் செய்யவும்.",
+        "SEBI-பதிவு பெற்ற நிறுவனம் மீது புகார்: SEBI SCORES (scores.sebi.gov.in).",
+        "எந்த 'டிப்'-பின் மீதும் செயல்படும் முன் குடும்பத்தினரிடம் சொல்லுங்கள்."
+      ],
+      "summary": "மிக அதிக ஆபத்து - இது மோசடியாக இருக்கலாம்.",
+      "disclaimer": "இது முடிவெடுக்க உதவும் தகவல் மட்டுமே; நிதி/சட்ட ஆலோசனை அல்ல."
+    }
+  }
+]
